@@ -18,6 +18,11 @@ class PersonagemViewSet(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = (JSONWebTokenAuthentication,)
 
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+
+
 
 class ComidaViewSet(generics.ListCreateAPIView):
     queryset = Comida.objects.all()
@@ -56,9 +61,20 @@ class TrocarDeClasse(APIView):
         classes = ['MG', 'GU', 'TK', 'BA']
         classe = request.data['classe']
         personagem = Personagem.objects.get(id=personagemId)
+        print(classe)
         if classe in classes:
             personagem.classe = classe
             personagem.save()
             return Response(status=200)
         else:
             return Response(400)
+
+class PersonagemChoice(APIView):
+    authentication_classes = (JSONWebTokenAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get(self, request, personagemId):
+        comidas = Comida.objects.all()
+        classes = ['MG', 'GU', 'TK', 'BA']
+        return Response(status=200, data={"comidas": ComidaSerializer(comidas,many=True).data,
+                                          "classes": classes, "personagem": PersonagemSerializer(Personagem.objects.get(id=personagemId)).data})

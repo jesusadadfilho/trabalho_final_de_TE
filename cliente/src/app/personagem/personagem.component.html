@@ -1,3 +1,32 @@
-<p>
-  personagem works!
-</p>
+<div>
+  <h1>Meus Projetos</h1>
+  <div>
+    <label>Nome do personagem</label>
+    <input #nome type="text" placeholder="Nome de personagem">
+    <label>Vida</label>
+    <input #vida type="number" placeholder="Vida">
+    <label>Classe</label>
+    <input #classe type="text" placeholder="classe">
+    <button (click)="criar(nome.value, vida.value, classe.value)">Adicionar personagem</button>
+  </div>
+
+</div>
+
+<ul>
+  <div *ngFor="let personagem of personagens">
+    <li>
+      <a routerLink="/personagens/{{personagem.id}}">
+        <div>
+          <div>
+            <div>
+              <h3>{{personagem.nome}}</h3>
+              <div></div>
+              <span>Vida: {{personagem.vida}}</span>
+            </div>
+            <p>{{personagem.classe}}</p>
+          </div>
+        </div>
+      </a>
+    </li>
+  </div>
+</ul>

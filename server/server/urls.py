@@ -24,6 +24,7 @@ urlpatterns = [
     path('auth/refresh-token/', refresh_jwt_token),
     path('personagem/', PersonagemViewSet.as_view()),
     path('comida/', ComidaViewSet.as_view()),
+    path('personagem/<int:personagemId>/', PersonagemChoice.as_view()),
     path('personagem/<int:personagemId>/comida/<int:comidaId>/alimentar/', Alimentar.as_view()),
     path('personagem/<int:personagemId>/trocadeclasse/', TrocarDeClasse.as_view()),
 ]
